@@ -1,0 +1,23 @@
+{% extends "base_template.html" %}
+
+{% block title %} Shot chart {% endblock %}
+
+{% block main %}
+
+<div class="container"> 
+	<div class="row">
+		<div class="col"> 
+
+			<div> 
+				<h1> {{ player }}'s shot chart for {{ season }} </h1> 
+			</div>
+
+			<div> 
+				<img src="{{ graph1 }}"></img>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}
