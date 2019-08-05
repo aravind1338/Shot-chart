@@ -15,7 +15,7 @@ def populate_chart(player, season, maptype, filter_paint_shots, width=2):
     ### Create the halfcourt ###
     fig, ax = plt.subplots(1, figsize=(10, 10))
 
-    hoop = plt.Circle((0, 0), radius=7.5, linewidth=width, color='black', fill=False)
+    hoop = Circle((0, 0), radius=7.5, linewidth=width, color='black', fill=False)
 
     backboard = Rectangle((-30, -7.5), 60, -1, linewidth=width, color='black', fill=False)
 
