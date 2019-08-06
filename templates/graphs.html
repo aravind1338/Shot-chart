@@ -1,3 +1,6 @@
+<!-- Template to display graph for a single player -->
+
+
 {% extends "base_template.html" %}
 
 {% block title %} Shot chart {% endblock %}
@@ -9,11 +12,16 @@
 		<div class="col"> 
 
 			<div> 
-				<h1> {{ player }}'s shot chart for {{ season }} </h1> 
+				<h1> {{ season }} </h1> 
 			</div>
 
 			<div> 
+				<img src="{{ image }}"></img><br>
 				<img src="{{ graph1 }}"></img>
+			</div>
+
+			<div>
+				<a href="/">Home</a>
 			</div>
 
 		</div>

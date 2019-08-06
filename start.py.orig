@@ -2,12 +2,24 @@ from flask import Flask, render_template, request, redirect
 from data import populate_chart, getPlayerImage
 
 app = Flask(__name__)
+<<<<<<< HEAD
+base_url = "http://127.0.0.1:5000"
+# Hoemepage, search for a single player or navigate to comparison page
+=======
 
 # Homepage, search for a single player
+>>>>>>> fix-html-spacing
 @app.route('/', methods=["GET", "POST"])
 def player_search():
 
     if request.method == "POST":
+<<<<<<< HEAD
+        
+        # If the user wants to compare two players
+        if request.form["go"] == "compare_players":
+            return "<h1> Hello </h1>"
+=======
+>>>>>>> fix-html-spacing
 
         player = ""
         season = ""
@@ -26,6 +38,25 @@ def player_search():
             try:
                 filter_paint_shots = request.form["filter"]
             except:
+<<<<<<< HEAD
+                return redirect("%s/error" %base_url)
+
+
+            if maptype == "heatmap":
+                try:
+                    filter_paint_shots = request.form["filter"]
+                except:
+                    return redirect("%s/error" %base_url)
+            else:
+                filter_paint_shots = "no"
+
+
+            if (player != "" and season != "" and maptype != ""):
+                return redirect("%s/%s/%s/%s/%s" %(base_url, player, season, maptype, filter_paint_shots))
+            else:
+                # If invalid strings are input, redirect to a standard error page
+                return redirect("%s/error" %base_url)
+=======
                 return redirect("/error")
         else:
             filter_paint_shots = "no"
@@ -36,6 +67,7 @@ def player_search():
         else:
             # If invalid strings are input, redirect to a standard error page
             return redirect("/error")
+>>>>>>> fix-html-spacing
 
     else:
 
@@ -54,6 +86,8 @@ def playerName(playerName, seasonName, maptype, filter_paint_shots):
     return render_template('graphs.html', graph1=bball_court, image=player_img, player=playerName, season=seasonName)
 
 
+<<<<<<< HEAD
+=======
 # URL where you can look at two players side by side
 @app.route('/compare', methods=["GET", "POST"])
 def compare():
@@ -108,6 +142,7 @@ def multiPlayerData(p1, s1, p2, s2, maptype, filter_paint_shots):
     return render_template('player_compare_graphs.html', graph1=p1_data, graph2= p2_data, p1_img=p1_img, p2_img=p2_img, p1=p1, s1=s1, p2=p2, s2=s2)
 
 
+>>>>>>> fix-html-spacing
 @app.route('/error')
 def error():
     return "<h1> Error! Check your player name and the format of the season and the map type</h1>"

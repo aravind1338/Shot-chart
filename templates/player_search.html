@@ -1,8 +1,12 @@
+<!-- Template to display the single player search page, i.e. opening page -->
+
+
 {% extends "base_template.html" %}
 
 {% block title %}Visualize individual shot charts{% endblock %}
 
 {% block main %}
+<a href="/compare">Player comparison</a>
 
 <div class="container"> 
 	<div class="row">
@@ -35,7 +39,7 @@
 				</div>
 
 				<button type="submit" class="btn btn-primary" name="go" value="get_chart"> Visualize </button><br>
-				<button type="submit" name="go" value="compare_players"> Compare two players </button>
+
 			</form>
 
 		</div>

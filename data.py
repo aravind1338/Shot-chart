@@ -6,10 +6,12 @@ import seaborn as sns
 import io
 import base64
 from nba_api.stats.static import players
+from PIL import Image
+import os.path
 
 
 # Method to draw a halfcourt and populate it with the players data
-# Takes the players name as input
+# Takes the players name as input and returns an image
 def populate_chart(player, season, maptype, filter_paint_shots, width=2):
 
     ### Create the halfcourt ###
@@ -71,6 +73,7 @@ def populate_chart(player, season, maptype, filter_paint_shots, width=2):
 
     ax.set_xlim(-300, 300)
     ax.set_ylim(-100, 500)
+    plt.axis("off")
 
     img = io.BytesIO()
     plt.savefig(img, format="png")
@@ -80,3 +83,46 @@ def populate_chart(player, season, maptype, filter_paint_shots, width=2):
     bball_court = 'data:image/png;base64,{}'.format(graph_url)
 
     return bball_court
+
+
+# Method to get a players image
+# Takes the players name as input and returns an image
+def getPlayerImage(player):
+
+    player = player.lower()
+    fullname = player.split()
+    firstname = fullname[0]
+    lastname = fullname[1]
+
+    if os.path.exists("%s_%s.png" % (lastname, firstname)) == False:
+
+        # If the players image file doesn't exist, create it
+
+
+        url = "https://nba-players.herokuapp.com/players/%s/%s" % (lastname, firstname)
+
+        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'}
+
+        response = requests.get(url, headers=headers)
+
+        with open("%s_%s.png" % (lastname, firstname),'wb') as f: 
+      
+            # Saving received content as a png file in 
+            # binary format 
+          
+            # write the contents of the response (r.content) 
+            # to a new file in binary mode. 
+            f.write(response.content)
+
+
+    # load the image into a displayable format
+    playerImgIO = io.BytesIO()
+    player_img = Image.open("%s_%s.png" % (lastname, firstname))
+    player_img.save(playerImgIO, "PNG")
+    playerImgIO.seek(0)
+
+    url = base64.b64encode(playerImgIO.getvalue()).decode()
+
+    player_img = 'data:image/png;base64,{}'.format(url)
+
+    return player_img
