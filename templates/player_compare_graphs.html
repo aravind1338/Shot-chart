@@ -1,7 +1,6 @@
 <!-- Template to display two graphs side by side for player comparison -->
 
 
-
 {% extends "base_template.html" %}
 
 {% block title %} Shot chart {% endblock %}
@@ -14,16 +13,22 @@
 
 			<div> 
 				<label>
-					<h1> {{ p1 }} in {{ s1 }} </h1>
+					<h1> {{ s1 }} </h1>
+					<img src="{{ p1_img }}"></img>
 					<img src="{{ graph1 }}"></img>
 				</label>
 			</div>
 
 			<div> 
 				<label>
-					<h1> {{ p2 }} in {{ s2 }}</h1>
+					<h1> {{ s2 }} </h1>
+					<img src="{{ p2_img }}"></img>
 					<img src="{{ graph2 }}"></img>
 				</label>
+			</div>
+
+			<div>
+				<a href="/">Back to comparison page</a>
 			</div>
 
 		</div>

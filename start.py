@@ -1,49 +1,41 @@
 from flask import Flask, render_template, request, redirect
-from data import populate_chart
+from data import populate_chart, getPlayerImage
 
 app = Flask(__name__)
 
-# Hoemepage, search for a single player or navigate to comparison page
+# Homepage, search for a single player
 @app.route('/', methods=["GET", "POST"])
 def player_search():
 
     if request.method == "POST":
+
+        player = ""
+        season = ""
+        maptype = ""
+
+        player = request.form["player"].strip()
+        season = request.form["season"].strip()
         
-        # If the user wants to compare two players
-        if request.form["go"] == "compare_players":
-            return redirect("/compare")
+        try:
+            maptype = request.form["map_type"]
+        except:
+            return redirect("/error")
 
 
-        # User chooses to look at a single player's map
-        else:
-
-            player = ""
-            season = ""
-            maptype = ""
-
-            player = request.form["player"].strip()
-            season = request.form["season"].strip()
-            
+        if maptype == "heatmap":
             try:
-                maptype = request.form["map_type"]
+                filter_paint_shots = request.form["filter"]
             except:
                 return redirect("/error")
+        else:
+            filter_paint_shots = "no"
 
 
-            if maptype == "heatmap":
-                try:
-                    filter_paint_shots = request.form["filter"]
-                except:
-                    return redirect("/error")
-            else:
-                filter_paint_shots = "no"
-
-
-            if (player != "" and season != "" and maptype != ""):
-                return redirect("/%s/%s/%s/%s" %(player, season, maptype, filter_paint_shots))
-            else:
-                # If invalid strings are input, redirect to a standard error page
-                return redirect("/error")
+        if (player != "" and season != "" and maptype != ""):
+            return redirect("/%s/%s/%s/%s" %(player, season, maptype, filter_paint_shots))
+        else:
+            # If invalid strings are input, redirect to a standard error page
+            return redirect("/error")
 
     else:
 
@@ -55,7 +47,10 @@ def player_search():
 def singlePlayerData(playerName, seasonName, maptype, filter_paint_shots):
 
     bball_court = populate_chart(playerName, seasonName, maptype, filter_paint_shots)
-    return render_template('graphs.html', graph1=bball_court, player=playerName, season=seasonName)
+
+    player_img = getPlayerImage(playerName)
+
+    return render_template('graphs.html', graph1=bball_court, image=player_img, player=playerName, season=seasonName)
 
 
 # URL where you can look at two players side by side
@@ -100,13 +95,16 @@ def compare():
         return render_template("player_compare.html")
 
 
-
 @app.route('/compare/<p1>/<s1>/<p2>/<s2>/<maptype>/<filter_paint_shots>')
 def multiPlayerData(p1, s1, p2, s2, maptype, filter_paint_shots):
 
     p1_data = populate_chart(p1, s1, maptype, filter_paint_shots)
     p2_data = populate_chart(p2, s2, maptype, filter_paint_shots)
-    return render_template('player_compare_graphs.html', graph1=p1_data, graph2= p2_data, p1=p1, s1=s1, p2=p2, s2=s2)
+
+    p1_img = getPlayerImage(p1)
+    p2_img = getPlayerImage(p2)
+
+    return render_template('player_compare_graphs.html', graph1=p1_data, graph2= p2_data, p1_img=p1_img, p2_img=p2_img, p1=p1, s1=s1, p2=p2, s2=s2)
 
 
 @app.route('/error')
