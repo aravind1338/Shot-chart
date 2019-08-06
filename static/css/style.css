@@ -1,3 +1,9 @@
 body {
 	background-color: #23D783;
+	background-image: url("/static/img/court.jpg");
+	background-position: center;
+  	background-repeat: no-repeat;
+  	background-size: cover;
+
+  	/*Photo by Martin Sanchez on Unsplash*/
 }
