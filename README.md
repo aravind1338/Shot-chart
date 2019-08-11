@@ -7,3 +7,11 @@ To run the application on your localhost:
   run "python start.py" from your terminal
 
 The application was up on pythonanywhere at (itsallrelative.pythonanywhere.com), but it wasn't functional because they don't allow apps that scrape data from stats.nba.com (yet)
+
+
+
+Shoutouts:
+
+- The author of http://savvastjortjoglou.com/nba-shot-sharts.html for helping with the creation of shot charts
+- Julian Nash and thenewboston on youtube for their amazing Flask tutorials
+- The author of https://github.com/swar/nba_api for creating a super easy-to-use API client
